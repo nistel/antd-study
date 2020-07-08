@@ -1,15 +1,19 @@
 import React from 'react';
-import Layout from './components/Layout';
+import {Layout} from 'antd';
+import Nav from './components/Nav';
+import Body from './components/Body';
+
+
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-
-      </header>
-      <Layout />
-    </div>
-  );
+    return (
+        <div className="App">
+            <Layout>
+                <Nav />
+                <Body />
+            </Layout>
+        </div>
+    );
 }
 
 export default App;
