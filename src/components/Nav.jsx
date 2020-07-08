@@ -27,12 +27,6 @@ const Nav = () => {
                 <Menu.Item key="2" icon={<VideoCameraOutlined />}>
                     <Link to="/users">게시판2</Link>
                 </Menu.Item>
-                <Menu.Item key="3" icon={<UploadOutlined />}>
-                    nav 3
-                </Menu.Item>
-                <Menu.Item key="4" icon={<UserOutlined />}>
-                    nav 4
-                </Menu.Item>
             </Menu>
         </Sider>
     )

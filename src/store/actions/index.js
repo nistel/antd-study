@@ -1,46 +1,28 @@
+import axios from 'axios';
 // 액션 타입 정의
-export const ADD_POSTING = 'ADD_POSTING';
-export const DELETE_POSTING = 'DELETE_POSTING';
-export const UPDATE_POSTING = 'UPDATE_POSTING';
+export const GET_ACADEMY_PLAYER = 'GET_ACADEMY_PLAYER';
+export const ADD_ACADEMY_PLAYER = 'ADD_ACADEMY_PLAYER';
+export const DELETE_ACADEMY_PLAYER = 'DELETE_ACADEMY_PLAYER';
+export const GET_MAIN = 'GET_MAIN';
 
-let nextId = 2;
+const BASE_URL = `https://testapi.log.gg/api/v1`
 
-// 액션 생성 함수
-export const addPosting = (title, description) => {
+export const getMainData = (data) => {
     return {
-        type: ADD_POSTING,
-        post: {
-            id: nextId++,
-            title,
-            description
-        }
-    };
-}
-
-export const updatePosting = (id, title, description) => {
-    return {
-        type: UPDATE_POSTING,
-        post: {
-            id: id,
-            title,
-            description
-        }
+        type: GET_MAIN,
+        data
     }
 }
 
-export const deletePosting = (id) => {
-    return {
-        type: DELETE_POSTING,
-        id
+export const getMains = () => {
+    return (dispatch) => {
+        return axios.get(`${BASE_URL}/main`)
+            .then(response => {
+                // console.log(response.data)
+                dispatch(getMainData(response.data.items))
+            })
+            .catch(error => {
+                throw(error);
+            });
     }
 }
-
-// export const updatePosting = (post) => {
-//     return {
-//         type: UPDATE_POSTING,
-//         payload: {
-//         title: post.title,
-//         description: post.description
-//         }
-//     }
-// }
