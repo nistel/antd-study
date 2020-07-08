@@ -4,7 +4,7 @@ import './index.css';
 import { Layout } from 'antd';
 import {Route} from "react-router-dom";
 import Main from "../containers/Main";
-import Users from "../containers/Users";
+import Keyword from "../containers/Keyword";
 const { Header, Content, Footer } = Layout;
 
 const Body = () => {
@@ -15,10 +15,10 @@ const Body = () => {
                 <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                     {/*<Route path="/" exact={true} component={Home}/>*/}
                     <Route path="/boards" component={Main}/>
-                    <Route path="/users" component={Users}/>
+                    <Route path="/keyword" component={Keyword}/>
                 </div>
             </Content>
-            <Footer style={{ textAlign: 'center' }}>COPYRIGHT (c) DRX ALL RIGHTS RESERVED. Created by ty</Footer>
+            <Footer style={{ textAlign: 'center' }}>COPYRIGHT (c) DRX ALL RIGHTS RESERVED. Created by Taeyoung</Footer>
         </Layout>
     )
 }

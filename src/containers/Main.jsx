@@ -1,9 +1,11 @@
-import React, { useEffect } from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import 'antd/dist/antd.css';
 import '../components/index.css';
-import { Table, Tag, Space } from 'antd';
-import { useSelector, useDispatch } from 'react-redux';
-import { getMains } from '../store/actions/index';
+import {Table, Input, Space, Button} from 'antd';
+import {useSelector, useDispatch} from 'react-redux';
+import Highlighter from 'react-highlight-words';
+import {SearchOutlined} from '@ant-design/icons';
+import {getMains} from '../store/actions/index';
 
 const Main = () => {
     const dispatch = useDispatch();
@@ -15,18 +17,84 @@ const Main = () => {
     const soloData = useSelector(state => state.main.soloTiers, []) || [];
     const duoData = useSelector(state => state.main.duoTiers, []) || [];
 
+    const [searchText, setSearchText] = useState('');
+    const [searchedColumn, setSearchedColumn] = useState('');
+    const searchInput = useRef(null);
+
+    function getColumnSearchProps(dataIndex) {
+        return {
+            filterDropdown: ({setSelectedKeys, selectedKeys, confirm, clearFilters}) => (
+                <div style={{padding: 8}}>
+                    <Input
+                        ref={ searchInput }
+                        placeholder={`Search ${dataIndex}`}
+                        value={selectedKeys[0]}
+                        onChange={e => setSelectedKeys(e.target.value ? [e.target.value] : [])}
+                        onPressEnter={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                        style={{width: 188, marginBottom: 8, display: 'block'}}
+                    />
+                    <Space>
+                        <Button
+                            type="primary"
+                            onClick={() => handleSearch(selectedKeys, confirm, dataIndex)}
+                            icon={<SearchOutlined/>}
+                            size="small"
+                            style={{width: 90}}
+                        >
+                            Search
+                        </Button>
+                        <Button onClick={() => handleReset(clearFilters)} size="small" style={{width: 90}}>
+                            Reset
+                        </Button>
+                    </Space>
+                </div>
+            ),
+            filterIcon: filtered => <SearchOutlined style={{color: filtered ? '#1890ff' : undefined}}/>,
+            onFilter: (value, record) =>
+                record[dataIndex].toString().toLowerCase().includes(value.toLowerCase()),
+            onFilterDropdownVisibleChange: visible => {
+                if (visible) {
+                    // setTimeout(() => this.searchInput.select());
+                }
+            },
+            render: text =>
+                searchedColumn === dataIndex ? (
+                    <Highlighter
+                        highlightStyle={{backgroundColor: '#ffc069', padding: 0}}
+                        searchWords={[searchText]}
+                        autoEscape
+                        textToHighlight={text.toString()}
+                    />
+                ) : (
+                    text
+                ),
+        }
+    }
+
+    function handleSearch(selectedKeys, confirm, dataIndex) {
+        confirm();
+        setSearchText(selectedKeys[0]);
+        setSearchedColumn(dataIndex);
+    };
+
+    function handleReset(clearFilters) {
+        clearFilters();
+        setSearchText('');
+    }
+
     const columns = [
         {
             title: '티어',
             dataIndex: 'champTier',
             key: 'champion.championId',
             render: text => <a>{text}</a>,
+            ...getColumnSearchProps('champTier'),
         },
         {
             title: '챔피언',
             dataIndex: 'champion',
             key: 'champion',
-            render:  text => text.nameKr,
+            render: text => text.nameKr,
         },
         {
             title: '라인주도권',
@@ -104,7 +172,7 @@ const Main = () => {
         },
     ];
     return (
-        <Table dataSource={soloData} columns={columns} />
+        <Table dataSource={soloData} columns={columns}/>
     )
 }
 

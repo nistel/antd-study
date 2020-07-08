@@ -25,7 +25,7 @@ const Nav = () => {
                     <Link to="/boards">게시판</Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                    <Link to="/users">게시판2</Link>
+                    <Link to="/keyword">게시판2</Link>
                 </Menu.Item>
             </Menu>
         </Sider>
