@@ -22,10 +22,10 @@ const Nav = () => {
             <div className="logo" />
             <Menu theme="dark" mode="inline" defaultSelectedKeys={['4']}>
                 <Menu.Item key="1" icon={<UserOutlined />}>
-                    <Link to="/boards">게시판</Link>
+                    <Link to="/academy">아카데미</Link>
                 </Menu.Item>
                 <Menu.Item key="2" icon={<VideoCameraOutlined />}>
-                    <Link to="/keyword">게시판2</Link>
+                    <Link to="/keyword">키워드</Link>
                 </Menu.Item>
             </Menu>
         </Sider>
